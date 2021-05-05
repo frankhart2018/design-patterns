@@ -2,6 +2,11 @@
 
 class Service {
 public:
+	virtual void write(std::string message) = 0;
+};
+
+class ServiceA: public Service {
+public:
 	void write(std::string message) {
 		std::cout << "Hello World" << std::endl;
 	}
@@ -9,29 +14,29 @@ public:
 
 class Client {
 private:
-	Service myService;
+	Service *myService;
 
 public:
 	// Injects via the constructor
-	Client(Service service) {
+	Client(Service *service) {
 		myService = service;
 	}
 
 	void doSomething() {
-		myService.write("This is a message");
+		myService->write("This is a message");
 	}
 
 	// Injects via setter method
-	void setService(Service service) {
+	void setService(Service *service) {
 		myService = service;
 	}
 };
 
 int main() {
-	Service service;
-	Client client(service);
+	ServiceA service;
+	Client client(&service);
 	client.doSomething();
-	client.setService(service);
+	client.setService(&service);
 
 	return 0;
 }
