@@ -2,3 +2,6 @@ out/
 .idea/
 .DS_Store
 .vscode
+.vs
+Debug/
+*.vcxproj*
